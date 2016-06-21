@@ -1,3 +1,25 @@
+def interactive_menu
+  students = []
+  loop do
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit"
+    selection = gets.chomp
+    case selection
+    when "1"
+      students = input_students
+    when "2"
+      print_header
+      print(students)
+      print_footer(students)
+    when "9"
+      exit
+    else
+      puts "I dont know what you meant, please try again"
+    end
+  end
+end
+
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit the return twice"
@@ -115,16 +137,18 @@ def shorter_than(students)
 end
 
 #nothing happens until we call the methods
-
-students = input_students
-print_header
-print(students)
-print_footer(students)
-sort_month(students)
+interactive_menu
+#students = input_students
+#print_header
+#print(students)
+#print_footer(students)
+#sort_month(students)
 #shorter_than(students)
 
+=begin
 puts "Would you like to filter the list by first letter?"
 answer = gets.chomp.downcase
 if answer == 'yes'
   first_letter_filter(students)
 end
+=end
