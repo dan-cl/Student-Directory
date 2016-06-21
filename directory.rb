@@ -5,12 +5,20 @@ def input_students
   students = []
   #get the first name
   name = gets.chomp
+
   #while the name is not empty, repeat this code
   while !name.empty? do
-    #add the student hash to the array
-    students << {name: name, cohort: :november}
+    puts "Please enter the students hobby"
+    hobby = gets.chomp
+    puts "Please enter the students height"
+    height = gets.chomp
+    puts "Please enter the students country of birth"
+    cob = gets.chomp
+    students << {name: name, hobby: hobby, height: height, cob: cob, cohort: :november}
     puts "Now we have #{students.count} students"
     #get another name from the user
+    puts "Please enter the name of the next student"
+    puts "To finish, just hit the return twice"
     name = gets.chomp
   end
 
@@ -23,16 +31,15 @@ def print_header
   puts "__________"
 end
 
-=begin Previous method for printing students name. Replaced with 'While' print(students)
-method below.
+
 def print(students)
   students.each_with_index do |student, idx|
-    puts "#{idx + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+    puts "#{idx + 1}. #{student[:name]} #{student[:hobby]} #{student[:height]} #{student[:cob]} (#{student[:cohort]} cohort)"
   end
 end
-=end
 
-#'while' print student method to replace .each mehtod from above, as per exercise 8.4
+
+=begin 'while' print student method to replace .each mehtod from above, as per exercise 8.4
 def print(students)
   counter =  0
   while counter < students.length
@@ -41,6 +48,7 @@ def print(students)
   end
 
 end
+=end
 
 def print_footer(student)
   puts "Overall, we have #{student.count} great students"
