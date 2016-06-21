@@ -13,6 +13,7 @@ def input_students
     #get another name from the user
     name = gets.chomp
   end
+
   #return the array of students
   students
 end
@@ -24,6 +25,9 @@ end
 
 def print(students)
   students.each_with_index do |student, idx|
+    puts student[:name][0]
+
+
     puts "#{idx + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
@@ -31,8 +35,25 @@ end
 def print_footer(student)
   puts "Overall, we have #{student.count} great students"
 end
+
+def first_letter_filter(students)
+  puts "Enter the first letter of the students' name"
+  firstl = gets.chomp.downcase
+  students.each_with_index do |student, idx|
+    if firstl == student[:name][0].downcase
+      puts "#{idx + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+    end
+  end
+end
 #nothing happens until we call the methods
+
 students = input_students
 print_header
 print(students)
 print_footer(students)
+
+puts "Would you like to filter the list by first letter?"
+answer = gets.chomp.downcase
+if answer == 'yes'
+  first_letter_filter(students)
+end
