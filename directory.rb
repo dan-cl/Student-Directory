@@ -30,7 +30,11 @@ def input_students
       cohort = default
     end
     students << {name: name, hobby: hobby, height: height, cob: cob, cohort: cohort}
-    puts "Now we have #{students.count} students"
+    if students.count < 2
+      puts "Now we have #{students.count} student"
+      else
+      puts "Now we have #{students.count} students"
+    end
     #get another name from the user
     puts "Please enter the name of the next student"
     puts "To finish, just hit the return twice"
@@ -83,7 +87,11 @@ end
 =end
 
 def print_footer(student)
-  puts "Overall, we have #{student.count} great students".center($line_width)
+  if student.count < 2
+    puts "Overall, we have #{student.count} great student".center($line_width)
+    else
+    puts "Overall, we have #{student.count} great students".center($line_width)
+  end
   puts "
   "
 end
