@@ -2,7 +2,7 @@
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -47,8 +47,8 @@ def save_students
   file.close
 end
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     @students <<{name: name, cohort: cohort.to_sym}
@@ -56,31 +56,43 @@ def load_students
   file.close
 end
 
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist"
+    exit
+  end
+end
+
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit the return twice"
   #get the first name
-  name = gets.rstrip! #rstrip! used instead of .chomp exercise 8.10
+  name = STDIN.gets.rstrip! #rstrip! used instead of .chomp exercise 8.10
   #while the name is not empty, repeat this code
   while !name.empty? do
     default = 'TBC' #set default value if no value is entered
     puts "Please enter the student's hobby"
-    hobby = gets.chomp
+    hobby = STDIN.gets.chomp
     if hobby.empty?
       hobby = default
     end
     puts "Please enter the student's height"
-    height = gets.chomp
+    height = STDIN.gets.chomp
     if height.empty?
       height = default
     end
     puts "Please enter the student's country of birth"
-    cob = gets.chomp
+    cob = STDIN.gets.chomp
     if cob.empty?
       cob = default
     end
     puts "Please enter the student's cohort month"
-    cohort = gets.chomp
+    cohort = STDIN.gets.chomp
     if cohort.empty?
       cohort = default
     end
@@ -93,7 +105,7 @@ def input_students
     #get another name from the user
     puts "Please enter the name of the next student"
     puts "To finish, just hit the return twice"
-    name = gets.chomp
+    name = STDIN.gets.chomp
   end
 end
 
@@ -167,7 +179,9 @@ def shorter_than
 end
 
 #nothing happens until we call the methods
+try_load_students
 interactive_menu
+
 #students = input_students
 #print_header
 #print(students)
