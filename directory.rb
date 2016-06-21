@@ -23,10 +23,23 @@ def print_header
   puts "__________"
 end
 
+=begin Previous method for printing students name. Replaced with 'While' print(students)
+method below.
 def print(students)
   students.each_with_index do |student, idx|
     puts "#{idx + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
   end
+end
+=end
+
+#'while' print student method to replace .each mehtod from above, as per exercise 8.4
+def print(students)
+  counter =  0
+  while counter < students.length
+    puts "#{students[counter][:name]} (#{students[counter][:cohort]} cohort)"
+    counter = counter + 1
+  end
+
 end
 
 def print_footer(student)
@@ -57,7 +70,7 @@ students = input_students
 print_header
 print(students)
 print_footer(students)
-shorter_than(students)
+#shorter_than(students)
 
 puts "Would you like to filter the list by first letter?"
 answer = gets.chomp.downcase
