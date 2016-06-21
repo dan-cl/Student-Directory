@@ -38,7 +38,7 @@ def input_students
   end
 
   #return the array of students
-  students
+   students
 end
 
 $line_width = 100
@@ -49,10 +49,25 @@ def print_header
 end
 
 
+def sort_month(students)
+  grouped = students.group_by {|student|  student[:cohort].to_sym}
+  grouped.each do |month, pupil|
+  puts "Students in #{month}.".center($line_width)
+  pupil.each do |info|
+    puts "#{info[:name]}".center($line_width)
+  end
+end
+end
+
+
 def print(students)
+  puts "Full list of students
+  ".center($line_width)
   students.each_with_index do |student, idx|
     puts "#{idx + 1}. #{student[:name]} #{student[:hobby]} #{student[:height]} #{student[:cob]} (#{student[:cohort]} cohort)".center($line_width)
   end
+  puts "
+  "
 end
 
 
@@ -69,6 +84,8 @@ end
 
 def print_footer(student)
   puts "Overall, we have #{student.count} great students".center($line_width)
+  puts "
+  "
 end
 
 def first_letter_filter(students)
@@ -95,6 +112,7 @@ students = input_students
 print_header
 print(students)
 print_footer(students)
+sort_month(students)
 #shorter_than(students)
 
 puts "Would you like to filter the list by first letter?"
