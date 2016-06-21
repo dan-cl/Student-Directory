@@ -25,9 +25,6 @@ end
 
 def print(students)
   students.each_with_index do |student, idx|
-    puts student[:name][0]
-
-
     puts "#{idx + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
@@ -45,12 +42,22 @@ def first_letter_filter(students)
     end
   end
 end
+
+def shorter_than(students)
+  students.each_with_index do |student, idx|
+    if student[:name].length < 12
+      puts "#{idx + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+    end
+  end
+end
+
 #nothing happens until we call the methods
 
 students = input_students
 print_header
 print(students)
 print_footer(students)
+shorter_than(students)
 
 puts "Would you like to filter the list by first letter?"
 answer = gets.chomp.downcase
