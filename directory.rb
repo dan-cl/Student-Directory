@@ -8,13 +8,28 @@ def input_students
 
   #while the name is not empty, repeat this code
   while !name.empty? do
-    puts "Please enter the students hobby"
+    default = 'TBC' #set default value if no value is entered
+    puts "Please enter the student's hobby"
     hobby = gets.chomp
-    puts "Please enter the students height"
+    if hobby.empty?
+      hobby = default
+    end
+    puts "Please enter the student's height"
     height = gets.chomp
-    puts "Please enter the students country of birth"
+    if height.empty?
+      height = default
+    end
+    puts "Please enter the student's country of birth"
     cob = gets.chomp
-    students << {name: name, hobby: hobby, height: height, cob: cob, cohort: :november}
+    if cob.empty?
+      cob = default
+    end
+    puts "Please enter the student's cohort month"
+    cohort = gets.chomp
+    if cohort.empty?
+      cohort = default
+    end
+    students << {name: name, hobby: hobby, height: height, cob: cob, cohort: cohort}
     puts "Now we have #{students.count} students"
     #get another name from the user
     puts "Please enter the name of the next student"
