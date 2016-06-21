@@ -26,15 +26,17 @@ def input_students
   students
 end
 
+$line_width = 100
+
 def print_header
-  puts "The students of Villains Academy"
-  puts "__________"
+  puts "The students of Villains Academy".center($line_width)
+  puts "__________".center($line_width)
 end
 
 
 def print(students)
   students.each_with_index do |student, idx|
-    puts "#{idx + 1}. #{student[:name]} #{student[:hobby]} #{student[:height]} #{student[:cob]} (#{student[:cohort]} cohort)"
+    puts "#{idx + 1}. #{student[:name]} #{student[:hobby]} #{student[:height]} #{student[:cob]} (#{student[:cohort]} cohort)".center($line_width)
   end
 end
 
@@ -51,7 +53,7 @@ end
 =end
 
 def print_footer(student)
-  puts "Overall, we have #{student.count} great students"
+  puts "Overall, we have #{student.count} great students".center($line_width)
 end
 
 def first_letter_filter(students)
