@@ -9,6 +9,7 @@ end
 
 def print_menu
   puts
+  puts "---------------------------------".center($line_width)
   puts "Student Directory Menu".center($line_width)
   puts "---------------------------------".center($line_width)
   puts "1. Input the students".center($line_width)
@@ -16,7 +17,9 @@ def print_menu
   puts "3. Save".center($line_width)
   puts "4. Save as...".center($line_width)
   puts "5. Load the list from students.csv".center($line_width)
+  puts "6. Filter student list by letter".center($line_width)
   puts "9. Exit".center($line_width)
+  puts "---------------------------------".center($line_width)
   puts
 end
 
@@ -38,6 +41,8 @@ def process(selection)
     save_as
   when "5"
     load_students
+  when "6"
+    first_letter_filter
   when "9"
     exit
   else
@@ -52,11 +57,14 @@ def save_students
   else
     file = File.open("#{@last_save}.csv", "w")
     @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
+    student_data = [student[:name], student[:hobby], student[:height], student[:cob], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
     end
   end
+  puts
+  puts "File saved".center($line_width)
+  puts
   file.close
 end
 
@@ -66,22 +74,31 @@ def save_as
   puts
   file = File.open("#{filename}.csv", "w")
   @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
+    student_data = [student[:name], student[:hobby], student[:height], student[:cob], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
   @last_save = filename
-  puts "File saved as #{@last_save}.csv"
+  puts
+  puts "File saved as #{@last_save}.csv".center($line_width)
   puts
   file.close
 end
 
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
+def load_students
+  puts
+  puts "Please enter filename to open".center($line_width)
+  puts
+  filename = gets.chomp
+  file = File.open("#{filename}.csv", "r")
   file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    @students <<{name: name, cohort: cohort.to_sym}
+    name, hobby, height, cob, cohort = line.chomp.split(',')
+    @students <<{name: name, hobby: hobby, height: height, cob: cob, cohort: cohort.to_sym}
   end
+  puts
+  puts "#{filename}.csv opened".center($line_width)
+  puts
+  @last_save = filename
   file.close
 end
 
@@ -90,9 +107,9 @@ def try_load_students
   return if filename.nil?
   if File.exists?(filename)
     load_students(filename)
-    puts "loaded #{@students.count} from #{filename}"
+    puts "loaded #{@students.count} from #{filename}".center($line_width)
   else
-    puts "Sorry, #{filename} doesn't exist"
+    puts "Sorry, #{filename} doesn't exist".center($line_width)
     exit
   end
 end
@@ -141,8 +158,9 @@ end
 $line_width = 100
 
 def print_header
+  puts "---------------------------------".center($line_width)
   puts "The students of Villains Academy".center($line_width)
-  puts "__________".center($line_width)
+  puts "---------------------------------".center($line_width)
 end
 
 
@@ -181,8 +199,10 @@ end
 
 def print_footer
   if @students.count < 2
+    puts "---------------------------------".center($line_width)
     puts "Overall, we have #{@students.count} great student".center($line_width)
     else
+    puts "---------------------------------".center($line_width)
     puts "Overall, we have #{@students.count} great students".center($line_width)
   end
   puts "
@@ -190,11 +210,15 @@ def print_footer
 end
 
 def first_letter_filter
+  puts
   puts "Enter the first letter of the students' name"
   firstl = gets.chomp.downcase
+  puts
+  puts "Students starting with '#{firstl}'".center($line_width)
+  puts "---------------------------------".center($line_width)
   @students.each_with_index do |student, idx|
     if firstl == student[:name][0].downcase
-      puts "#{idx + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+      puts "#{idx + 1}. #{student[:name]} (#{student[:cohort]} cohort)".center($line_width)
     end
   end
 end
@@ -210,18 +234,3 @@ end
 #nothing happens until we call the methods
 try_load_students
 interactive_menu
-
-#students = input_students
-#print_header
-#print(students)
-#print_footer(students)
-#sort_month(students)
-#shorter_than(students)
-
-=begin
-puts "Would you like to filter the list by first letter?"
-answer = gets.chomp.downcase
-if answer == 'yes'
-  first_letter_filter(students)
-end
-=end
