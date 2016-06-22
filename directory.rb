@@ -1,4 +1,5 @@
 @students = []
+@last_save = 0
 def interactive_menu
   loop do
     print_menu
@@ -7,11 +8,16 @@ def interactive_menu
 end
 
 def print_menu
-  puts "1. Input the students"
-  puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
-  puts "9. Exit"
+  puts
+  puts "Student Directory Menu".center($line_width)
+  puts "---------------------------------".center($line_width)
+  puts "1. Input the students".center($line_width)
+  puts "2. Show the students".center($line_width)
+  puts "3. Save".center($line_width)
+  puts "4. Save as...".center($line_width)
+  puts "5. Load the list from students.csv".center($line_width)
+  puts "9. Exit".center($line_width)
+  puts
 end
 
 def show_students
@@ -29,6 +35,8 @@ def process(selection)
   when "3"
     save_students
   when "4"
+    save_as
+  when "5"
     load_students
   when "9"
     exit
@@ -38,12 +46,33 @@ def process(selection)
 end
 
 def save_students
-  file = File.open("students.csv", "w")
+  if @last_save == 0
+    save_as
+    return
+  else
+    file = File.open("#{@last_save}.csv", "w")
+    @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+    end
+  end
+  file.close
+end
+
+def save_as
+  puts "Please enter filename"
+  filename = gets.chomp
+  puts
+  file = File.open("#{filename}.csv", "w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
+  @last_save = filename
+  puts "File saved as #{@last_save}.csv"
+  puts
   file.close
 end
 
